@@ -139,3 +139,19 @@ sync_priority    | 0  #同步Replication的优先度
                       0: 异步、1～?: 同步(数字越小优先度越高)
 sync_state       | async  # 有三个值，async: 异步、sync: 同步、potential: 虽然现在是异步模式，但是有可能升级到同步模式
 ```
+
+
+# 创建一个用户给应用
+
+在数据库中执行：
+```
+create user appadmin with password "password";
+create schema appadmin;
+grant all on database mme_commerce to appadmin;
+grant all on table in schema public to appadmin;
+grant all on table in schema appadmin to appamin;
+```
+
+配置pg_hda.conf，
+具体可参照：
+[http://mysql.taobao.org/monthly/2016/05/03/](http://mysql.taobao.org/monthly/2016/05/03/)
