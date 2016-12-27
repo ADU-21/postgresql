@@ -74,7 +74,7 @@ postgres的从配置
 创建的目录为 ```/var/lib/pgsql/data```
 
 ```
-pg_basebackup -F p --progress -D /data/pgsql/data2 -h 10.12.12.10 -p 5432 -U replica --password replica
+pg_basebackup -D /data/pgsql/data -h 10.12.12.10 -p 5432 -U replica --password replica
 ```
 
 这里使用了pg_basebackup这个命令，```/var/lib/pgsql/data```这个目录是空的
@@ -93,8 +93,10 @@ standby_mode = on  # 这个说明这台机器为从库
 primary_conninfo = 'host=10.12.12.10 port=5432 user=replica password=replica'  # 这个说明这台机器对应主库的信息
 
 recovery_target_timeline = 'latest' # 这个说明这个流复制同步到最新的数据
+```
 postgresql.conf中也有几个地方要进行修改
 
+```
 max_connections = 1000 ＃ 一般查多于写的应用从库的最大连接数要比较大
 
 hot_standby = on  ＃ 说明这台机器不仅仅是用于数据归档，也用于数据查询
@@ -144,6 +146,7 @@ sync_state       | async  # 有三个值，async: 异步、sync: 同步、potent
 # 创建一个用户给应用
 
 在数据库中执行：
+
 ```
 create user appadmin with password "password";
 create schema appadmin;
